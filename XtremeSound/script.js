@@ -588,4 +588,4 @@ function checkoutWhatsApp() {
 
 
   let message =
-    "Hola XtremeSound™ 👋\n\n
+    "Hola XtremeSound™ 👋
