@@ -1,0 +1,43 @@
+{
+  "store": {
+    "name": "XtremeSound",
+
+    "shipping": {
+      "carrier": "DHL Express",
+      "message": "Envío seguro y protegido por DHL Express"
+    }
+  },
+
+  "products": [
+
+    {
+      "id": "XSBuds3Pro",
+
+      "name": "XtremeSound Buds3 Pro",
+
+      "variant": "Grafito",
+
+      "category": "Audifonos",
+
+      "price": "799",
+
+      "currency": "MXN",
+
+      "image": "https://chrisworldtm.github.io/1.png",
+
+      "preparation": {
+        "days": 2,
+        "message": "Preparación estándar del pedido."
+      },
+
+      "shipping": {
+        "carrier": "DHL Express",
+        "message": "Envío seguro y protegido por DHL Express."
+      },
+
+      "stock": "1000000",
+
+      "available": true
+    }
+  ]
+}
