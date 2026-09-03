@@ -4,6 +4,9 @@
 
 const WHATSAPP_NUMBER = "525642611184";
 
+const PRODUCTS_URL =
+  "https://chrisworldtm.github.io/XtremeSound/products.json";
+
 
 /* ==========================================
    VARIABLES
@@ -71,13 +74,13 @@ async function loadProducts() {
   try {
 
     const response =
-      await fetch("https://chrisworldtm.github.io/XtremeSound/products.json");
+      await fetch(PRODUCTS_URL);
 
 
     if (!response.ok) {
 
       throw new Error(
-        "No se pudo cargar los productos"
+        "No se pudo cargar el catálogo."
       );
 
     }
@@ -85,6 +88,18 @@ async function loadProducts() {
 
     const data =
       await response.json();
+
+
+    if (
+      !data.products ||
+      !Array.isArray(data.products)
+    ) {
+
+      throw new Error(
+        "El archivo JSON no contiene productos válidos."
+      );
+
+    }
 
 
     products =
@@ -110,8 +125,8 @@ async function loadProducts() {
         </h3>
 
         <p>
-          Comprueba que la pagina
-          esté en la carpeta correcta.
+          Comprueba que el archivo products.json
+          esté disponible.
         </p>
 
       </div>
@@ -144,14 +159,31 @@ function renderProducts() {
         product.category === selectedCategory;
 
 
-      const searchMatch =
-        product.name
-          .toLowerCase()
-          .includes(search) ||
+      const productName =
+        String(product.name || "")
+          .toLowerCase();
 
-        product.variant
-          .toLowerCase()
-          .includes(search);
+
+      const variant =
+        String(product.variant || "")
+          .toLowerCase();
+
+
+      const category =
+        String(product.category || "")
+          .toLowerCase();
+
+
+      const id =
+        String(product.id || "")
+          .toLowerCase();
+
+
+      const searchMatch =
+        productName.includes(search) ||
+        variant.includes(search) ||
+        category.includes(search) ||
+        id.includes(search);
 
 
       return categoryMatch &&
@@ -205,7 +237,7 @@ function renderProducts() {
 
     if (
       product.preparation &&
-      product.preparation.days > 0
+      Number(product.preparation.days) > 0
     ) {
 
       preparationHTML = `
@@ -213,13 +245,18 @@ function renderProducts() {
         <div class="preparation-badge">
 
           ⏳
-          ${product.preparation.message}
+          ${product.preparation.message || "Preparación del pedido."}
 
         </div>
 
       `;
 
     }
+
+
+    const available =
+      product.available === true &&
+      Number(product.stock) > 0;
 
 
     card.innerHTML = `
@@ -253,7 +290,7 @@ function renderProducts() {
 
         <div class="product-variant">
 
-          ${product.variant}
+          ${product.variant || ""}
 
         </div>
 
@@ -272,7 +309,7 @@ function renderProducts() {
         <div class="shipping-badge">
 
           🚚
-          ${product.shipping.message}
+          ${product.shipping?.message || "Envío seguro."}
 
         </div>
 
@@ -280,12 +317,12 @@ function renderProducts() {
         <button
           class="add-button"
           data-id="${product.id}"
-          ${!product.available ? "disabled" : ""}
+          ${!available ? "disabled" : ""}
         >
 
           ${
-            product.available
-             ? "Agregar al carrito"
+            available
+              ? "Agregar al carrito"
               : "Agotado"
           }
 
@@ -315,8 +352,18 @@ function addToCart(id) {
     );
 
 
-  if (!product || !product.available) {
+  if (!product) {
     return;
+  }
+
+
+  if (
+    product.available !== true ||
+    Number(product.stock) <= 0
+  ) {
+
+    return;
+
   }
 
 
@@ -337,7 +384,18 @@ function addToCart(id) {
 
 function removeFromCart(index) {
 
+  if (
+    index < 0 ||
+    index >= cart.length
+  ) {
+
+    return;
+
+  }
+
+
   cart.splice(index, 1);
+
 
   updateCart();
 
@@ -391,6 +449,7 @@ function updateCart() {
   cart.forEach(
     (product, index) => {
 
+
       total +=
         Number(product.price);
 
@@ -416,7 +475,7 @@ function updateCart() {
 
           <div class="cart-item-variant">
 
-            ${product.variant}
+            ${product.variant || ""}
 
           </div>
 
@@ -529,184 +588,4 @@ function checkoutWhatsApp() {
 
 
   let message =
-    "Hola ChrisWorld™ %0A%0A" +
-    "Quiero realizar el siguiente pedido:%0A%0A";
-
-
-  cart.forEach(
-    (product, index) => {
-
-      total +=
-        Number(product.price);
-
-
-      message +=
-        `${index + 1}. ${product.name}%0A`;
-
-
-      message +=
-        `   $${formatPrice(product.price)} ${product.currency}%0A%0A`;
-
-    }
-  );
-
-  message +=
-    "¿Me pueden indicar cómo continuar con mi pedido?";
-
-
-  const url =
-    `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
-
-
-  window.open(
-    url,
-    "_blank"
-  );
-
-}
-
-
-/* ==========================================
-   EVENTOS
-========================================== */
-
-
-/* Buscar */
-
-searchInput.addEventListener(
-  "input",
-  renderProducts
-);
-
-
-/* Agregar al carrito */
-
-productList.addEventListener(
-  "click",
-  event => {
-
-    const button =
-      event.target.closest(".add-button");
-
-
-    if (!button) {
-      return;
-    }
-
-
-    const id =
-      button.dataset.id;
-
-
-    addToCart(id);
-
-  }
-);
-
-
-/* Eliminar */
-
-cartItems.addEventListener(
-  "click",
-  event => {
-
-    const button =
-      event.target.closest(".remove-button");
-
-
-    if (!button) {
-      return;
-    }
-
-
-    const index =
-      Number(button.dataset.index);
-
-
-    removeFromCart(index);
-
-  }
-);
-
-
-/* Categorías */
-
-document
-  .querySelectorAll(".category")
-  .forEach(button => {
-
-    button.addEventListener(
-      "click",
-      () => {
-
-        selectCategory(
-          button.dataset.category
-        );
-
-      }
-    );
-
-  });
-
-
-/* Abrir carrito */
-
-document
-  .getElementById("open-cart")
-  .addEventListener(
-    "click",
-    openCart
-  );
-
-
-/* Cerrar carrito */
-
-document
-  .getElementById("close-cart")
-  .addEventListener(
-    "click",
-    closeCart
-  );
-
-
-/* Overlay */
-
-cartOverlay.addEventListener(
-  "click",
-  closeCart
-);
-
-
-/* Checkout */
-
-document
-  .getElementById("checkout")
-  .addEventListener(
-    "click",
-    checkoutWhatsApp
-  );
-
-
-/* Hero */
-
-document
-  .getElementById("view-products")
-  .addEventListener(
-    "click",
-    () => {
-
-      document
-        .getElementById("products-section")
-        .scrollIntoView({
-          behavior: "smooth"
-        });
-
-    }
-  );
-
-
-/* ==========================================
-   INICIAR TIENDA
-========================================== */
-
-loadProducts();
+    "Hola XtremeSound™ 👋\n\n
