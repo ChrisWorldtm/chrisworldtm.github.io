@@ -71,13 +71,13 @@ async function loadProducts() {
   try {
 
     const response =
-      await fetch("products.json");
+      await fetch("https://chrisworldtm.github.io/XtremeSound/products.json");
 
 
     if (!response.ok) {
 
       throw new Error(
-        "No se pudo cargar products.json"
+        "No se pudo cargar los productos"
       );
 
     }
@@ -110,7 +110,7 @@ async function loadProducts() {
         </h3>
 
         <p>
-          Comprueba que products.json
+          Comprueba que la pagina
           esté en la carpeta correcta.
         </p>
 
