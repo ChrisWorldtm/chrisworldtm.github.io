@@ -4,9 +4,6 @@
 
 const WHATSAPP_NUMBER = "525642611184";
 
-const PRODUCTS_URL =
-  "https://chrisworldtm.github.io/XtremeSound/products.json";
-
 
 /* ==========================================
    VARIABLES
@@ -49,6 +46,21 @@ const productCounter =
 
 
 /* ==========================================
+   VERIFICACIÓN DE PRODUCTO
+========================================== */
+
+const verificationOverlay =
+  document.getElementById(
+    "verification-overlay"
+  );
+
+const verificationClose =
+  document.getElementById(
+    "verification-close"
+  );
+
+
+/* ==========================================
    FORMATO DE PRECIOS
 ========================================== */
 
@@ -74,13 +86,15 @@ async function loadProducts() {
   try {
 
     const response =
-      await fetch(PRODUCTS_URL);
+      await fetch(
+        "https://chrisworldtm.github.io/XtremeSound/products.json"
+      );
 
 
     if (!response.ok) {
 
       throw new Error(
-        "No se pudo cargar el catálogo."
+        "No se pudo cargar los productos"
       );
 
     }
@@ -88,18 +102,6 @@ async function loadProducts() {
 
     const data =
       await response.json();
-
-
-    if (
-      !data.products ||
-      !Array.isArray(data.products)
-    ) {
-
-      throw new Error(
-        "El archivo JSON no contiene productos válidos."
-      );
-
-    }
 
 
     products =
@@ -125,13 +127,13 @@ async function loadProducts() {
         </h3>
 
         <p>
-          Comprueba que el archivo products.json
-          esté disponible.
+          Comprueba que la página
+          esté en la carpeta correcta.
         </p>
 
       </div>
-      
-      ;
+
+    `;
 
   }
 
@@ -159,31 +161,14 @@ function renderProducts() {
         product.category === selectedCategory;
 
 
-      const productName =
-        String(product.name || "")
-          .toLowerCase();
-
-
-      const variant =
-        String(product.variant || "")
-          .toLowerCase();
-
-
-      const category =
-        String(product.category || "")
-          .toLowerCase();
-
-
-      const id =
-        String(product.id || "")
-          .toLowerCase();
-
-
       const searchMatch =
-        productName.includes(search) ||
-        variant.includes(search) ||
-        category.includes(search) ||
-        id.includes(search);
+        product.name
+          .toLowerCase()
+          .includes(search) ||
+
+        product.variant
+          .toLowerCase()
+          .includes(search);
 
 
       return categoryMatch &&
@@ -196,7 +181,11 @@ function renderProducts() {
 
 
   productCounter.textContent =
-    `${filtered.length} producto${filtered.length !== 1 ? "s" : ""}`;
+    `${filtered.length} producto${
+      filtered.length !== 1
+        ? "s"
+        : ""
+    }`;
 
 
   if (filtered.length === 0) {
@@ -237,7 +226,7 @@ function renderProducts() {
 
     if (
       product.preparation &&
-      Number(product.preparation.days) > 0
+      product.preparation.days > 0
     ) {
 
       preparationHTML = `
@@ -245,18 +234,13 @@ function renderProducts() {
         <div class="preparation-badge">
 
           ⏳
-          ${product.preparation.message || "Preparación del pedido."}
+          ${product.preparation.message}
 
         </div>
 
       `;
 
     }
-
-
-    const available =
-      product.available === true &&
-      Number(product.stock) > 0;
 
 
     card.innerHTML = `
@@ -290,7 +274,7 @@ function renderProducts() {
 
         <div class="product-variant">
 
-          ${product.variant || ""}
+          ${product.variant}
 
         </div>
 
@@ -309,7 +293,7 @@ function renderProducts() {
         <div class="shipping-badge">
 
           🚚
-          ${product.shipping?.message || "Envío seguro."}
+          ${product.shipping.message}
 
         </div>
 
@@ -317,11 +301,11 @@ function renderProducts() {
         <button
           class="add-button"
           data-id="${product.id}"
-          ${!available ? "disabled" : ""}
+          ${!product.available ? "disabled" : ""}
         >
 
           ${
-            available
+            product.available
               ? "Agregar al carrito"
               : "Agotado"
           }
@@ -352,14 +336,9 @@ function addToCart(id) {
     );
 
 
-  if (!product) {
-    return;
-  }
-
-
   if (
-    product.available !== true ||
-    Number(product.stock) <= 0
+    !product ||
+    !product.available
   ) {
 
     return;
@@ -384,18 +363,7 @@ function addToCart(id) {
 
 function removeFromCart(index) {
 
-  if (
-    index < 0 ||
-    index >= cart.length
-  ) {
-
-    return;
-
-  }
-
-
   cart.splice(index, 1);
-
 
   updateCart();
 
@@ -449,7 +417,6 @@ function updateCart() {
   cart.forEach(
     (product, index) => {
 
-
       total +=
         Number(product.price);
 
@@ -475,7 +442,7 @@ function updateCart() {
 
           <div class="cart-item-variant">
 
-            ${product.variant || ""}
+            ${product.variant}
 
           </div>
 
@@ -520,9 +487,13 @@ function updateCart() {
 
 function openCart() {
 
-  cartElement.classList.add("open");
+  cartElement.classList.add(
+    "open"
+  );
 
-  cartOverlay.classList.add("active");
+  cartOverlay.classList.add(
+    "active"
+  );
 
 }
 
@@ -533,9 +504,13 @@ function openCart() {
 
 function closeCart() {
 
-  cartElement.classList.remove("open");
+  cartElement.classList.remove(
+    "open"
+  );
 
-  cartOverlay.classList.remove("active");
+  cartOverlay.classList.remove(
+    "active"
+  );
 
 }
 
@@ -588,4 +563,329 @@ function checkoutWhatsApp() {
 
 
   let message =
-    "Hola XtremeSound™ 👋"
+    "Hola XtremeSound™ %0A%0A" +
+    "Quiero realizar el siguiente pedido:%0A%0A";
+
+
+  cart.forEach(
+    (product, index) => {
+
+      total +=
+        Number(product.price);
+
+
+      message +=
+        `${index + 1}. ${product.name}%0A`;
+
+
+      message +=
+        `   Variante: ${product.variant}%0A`;
+
+
+      message +=
+        `   $${formatPrice(product.price)} ${product.currency}%0A%0A`;
+
+    }
+  );
+
+
+  message +=
+    `TOTAL: $${formatPrice(total)} MXN%0A%0A`;
+
+
+  message +=
+    "¿Me pueden indicar cómo continuar con mi pedido?";
+
+
+  const url =
+    `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
+
+
+  window.open(
+    url,
+    "_blank"
+  );
+
+}
+
+
+/* ==========================================
+   VERIFICACIÓN DE PRODUCTO
+========================================== */
+
+function showVerification() {
+
+  if (!verificationOverlay) {
+
+    return;
+
+  }
+
+
+  verificationOverlay.classList.add(
+    "active"
+  );
+
+
+  document.body.style.overflow =
+    "hidden";
+
+}
+
+
+function closeVerification() {
+
+  if (!verificationOverlay) {
+
+    return;
+
+  }
+
+
+  verificationOverlay.classList.remove(
+    "active"
+  );
+
+
+  document.body.style.overflow =
+    "";
+
+}
+
+
+/* ==========================================
+   DETECTAR CÓDIGO DE VERIFICACIÓN
+========================================== */
+
+function checkProductVerification() {
+
+  const code =
+    window.location.hash
+      .substring(1)
+      .trim()
+      .toUpperCase();
+
+
+  if (code === "B3PS") {
+
+    showVerification();
+
+  }
+
+}
+
+
+/* ==========================================
+   EVENTOS
+========================================== */
+
+
+/* Buscar */
+
+searchInput.addEventListener(
+  "input",
+  renderProducts
+);
+
+
+/* Agregar al carrito */
+
+productList.addEventListener(
+  "click",
+  event => {
+
+    const button =
+      event.target.closest(
+        ".add-button"
+      );
+
+
+    if (!button) {
+
+      return;
+
+    }
+
+
+    const id =
+      button.dataset.id;
+
+
+    addToCart(id);
+
+  }
+);
+
+
+/* Eliminar */
+
+cartItems.addEventListener(
+  "click",
+  event => {
+
+    const button =
+      event.target.closest(
+        ".remove-button"
+      );
+
+
+    if (!button) {
+
+      return;
+
+    }
+
+
+    const index =
+      Number(button.dataset.index);
+
+
+    removeFromCart(index);
+
+  }
+);
+
+
+/* Categorías */
+
+document
+  .querySelectorAll(".category")
+  .forEach(button => {
+
+    button.addEventListener(
+      "click",
+      () => {
+
+        selectCategory(
+          button.dataset.category
+        );
+
+      }
+    );
+
+  });
+
+
+/* Abrir carrito */
+
+document
+  .getElementById("open-cart")
+  .addEventListener(
+    "click",
+    openCart
+  );
+
+
+/* Cerrar carrito */
+
+document
+  .getElementById("close-cart")
+  .addEventListener(
+    "click",
+    closeCart
+  );
+
+
+/* Overlay */
+
+cartOverlay.addEventListener(
+  "click",
+  closeCart
+);
+
+
+/* Checkout */
+
+document
+  .getElementById("checkout")
+  .addEventListener(
+    "click",
+    checkoutWhatsApp
+  );
+
+
+/* Hero */
+
+document
+  .getElementById("view-products")
+  .addEventListener(
+    "click",
+    () => {
+
+      document
+        .getElementById("products-section")
+        .scrollIntoView({
+          behavior: "smooth"
+        });
+
+    }
+  );
+
+
+/* ==========================================
+   EVENTOS: VERIFICACIÓN
+========================================== */
+
+
+/* Cerrar con X */
+
+verificationClose.addEventListener(
+  "click",
+  closeVerification
+);
+
+
+/* Cerrar haciendo clic fuera */
+
+verificationOverlay.addEventListener(
+  "click",
+  event => {
+
+    if (
+      event.target === verificationOverlay
+    ) {
+
+      closeVerification();
+
+    }
+
+  }
+);
+
+
+/* Cerrar con ESC */
+
+document.addEventListener(
+  "keydown",
+  event => {
+
+    if (
+      event.key === "Escape"
+    ) {
+
+      closeVerification();
+
+    }
+
+  }
+);
+
+
+/* Detectar al cargar */
+
+checkProductVerification();
+
+
+/* Detectar si cambia el hash */
+
+window.addEventListener(
+  "hashchange",
+  checkProductVerification
+);
+
+
+/* ==========================================
+   INICIAR TIENDA
+========================================== */
+
+loadProducts();
