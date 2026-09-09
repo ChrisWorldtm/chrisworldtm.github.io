@@ -46,7 +46,7 @@ const productCounter =
 
 
 /* ==========================================
-   VERIFICACIÓN DE PRODUCTO
+   ELEMENTOS: VERIFICACIÓN
 ========================================== */
 
 const verificationOverlay =
@@ -57,6 +57,16 @@ const verificationOverlay =
 const verificationClose =
   document.getElementById(
     "verification-close"
+  );
+
+const verificationProduct =
+  document.getElementById(
+    "verification-product"
+  );
+
+const verificationDescription =
+  document.getElementById(
+    "verification-description"
   );
 
 
@@ -667,13 +677,72 @@ function checkProductVerification() {
 
 
   if (
-    code === "B3PS" ||
-    code === "B4PS"
+    code !== "B3PS" &&
+    code !== "B4PS"
   ) {
 
-    showVerification();
+    return;
 
   }
+
+
+  /* =========================
+     XS BUDS3 PRO
+  ========================== */
+
+  if (code === "B3PS") {
+
+    if (verificationProduct) {
+
+      verificationProduct.innerHTML =
+        "Compraste tus " +
+        "<strong>XS Buds3 Pro</strong> " +
+        "de forma oficial.";
+
+    }
+
+
+    if (verificationDescription) {
+
+      verificationDescription.textContent =
+        "Tus XtremeSound Buds3 Pro forman " +
+        "parte de la línea oficial " +
+        "XtremeSound™.";
+
+    }
+
+  }
+
+
+  /* =========================
+     XS BUDS4 PRO
+  ========================== */
+
+  if (code === "B4PS") {
+
+    if (verificationProduct) {
+
+      verificationProduct.innerHTML =
+        "Compraste tus " +
+        "<strong>XS Buds4 Pro</strong> " +
+        "de forma oficial.";
+
+    }
+
+
+    if (verificationDescription) {
+
+      verificationDescription.textContent =
+        "Tus XtremeSound Buds4 Pro forman " +
+        "parte de la línea oficial " +
+        "XtremeSound™.";
+
+    }
+
+  }
+
+
+  showVerification();
 
 }
 
@@ -832,28 +901,36 @@ document
 
 /* Cerrar con X */
 
-verificationClose.addEventListener(
-  "click",
-  closeVerification
-);
+if (verificationClose) {
+
+  verificationClose.addEventListener(
+    "click",
+    closeVerification
+  );
+
+}
 
 
 /* Cerrar haciendo clic fuera */
 
-verificationOverlay.addEventListener(
-  "click",
-  event => {
+if (verificationOverlay) {
 
-    if (
-      event.target === verificationOverlay
-    ) {
+  verificationOverlay.addEventListener(
+    "click",
+    event => {
 
-      closeVerification();
+      if (
+        event.target === verificationOverlay
+      ) {
+
+        closeVerification();
+
+      }
 
     }
+  );
 
-  }
-);
+}
 
 
 /* Cerrar con ESC */
@@ -874,12 +951,16 @@ document.addEventListener(
 );
 
 
-/* Detectar al cargar */
+/* ==========================================
+   VERIFICACIÓN AL CARGAR
+========================================== */
 
 checkProductVerification();
 
 
-/* Detectar si cambia el hash */
+/* ==========================================
+   DETECTAR CAMBIOS EN EL HASH
+========================================== */
 
 window.addEventListener(
   "hashchange",
