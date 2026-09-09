@@ -666,7 +666,10 @@ function checkProductVerification() {
       .toUpperCase();
 
 
-  if (code === "B3PS") {
+  if (
+    code === "B3PS" ||
+    code === "B4PS"
+  ) {
 
     showVerification();
 
