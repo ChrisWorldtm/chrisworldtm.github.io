@@ -3,131 +3,564 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
     <title>Horario Escolar - 3° A Vespertino</title>
-    <link rel="icon" type="image/png" href="https://chrisworldtm.github.io/horarios/3A/favicon3a.png">
+
+    <link rel="icon" type="image/png"
+        href="https://chrisworldtm.github.io/horarios/3A/favicon3a.png">
+
     <style>
-        body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            background-color: #f4f7f6; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            min-height: 100vh; 
-            margin: 0; 
-            padding: 10px; /* Reducido para móviles */
+        * {
             box-sizing: border-box;
         }
-        .container { 
-            background-color: #ffffff; 
-            padding: 20px; 
-            border-radius: 12px; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
-            width: 100%; 
-            max-width: 1000px; 
-        }
-        h1 { 
-            text-align: center; 
-            color: #2c3e50; 
-            text-transform: uppercase; 
-            margin-bottom: 5px; 
-            letter-spacing: 1px;
-            font-size: 24px;
-        }
-        h3 { 
-            text-align: center; 
-            color: #7f8c8d; 
-            margin-top: 0; 
-            margin-bottom: 20px; 
-            font-weight: 500; 
-            font-size: 16px;
-        }
-        /* Contenedor para scroll horizontal en móviles */
-        .table-wrapper {
-            width: 100%;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch; /* Scroll suave en iOS */
-            border-radius: 8px;
-            box-shadow: 0 0 0 1px #e0e0e0;
-        }
-        table { 
-            width: 100%; 
-            border-collapse: collapse; 
-            min-width: 600px; /* Evita que el texto se aplaste en pantallas muy pequeñas */
-        }
-        th, td { 
-            border: 1px solid #e0e0e0; 
-            padding: 12px 10px; 
-            text-align: center; 
-            font-size: 14px;
-        }
-        th { 
-            background-color: #2c3e50; 
-            color: #ffffff; 
-            font-weight: 600; 
-            text-transform: uppercase; 
-            letter-spacing: 0.5px;
-            position: sticky;
-            top: 0;
-        }
-        td { 
-            background-color: #fafafa; 
-            color: #333; 
-            font-weight: 500; 
-        }
-        tr:hover td { 
-            background-color: #f1f8ff; 
-        }
-        .time { 
-            background-color: #ecf0f1; 
-            font-weight: 700; 
-            color: #2c3e50; 
-            white-space: nowrap;
-        }
-        .receso td { 
-            background-color: #f39c12; 
-            color: #ffffff; 
-            font-weight: 700; 
-            text-transform: uppercase; 
-            letter-spacing: 4px; 
-            font-size: 15px;
-        }
-        .receso:hover td { 
-            background-color: #e67e22; 
-        }
-        .receso .time {
-            background-color: #d35400;
-            color: #ffffff;
-            letter-spacing: normal;
-        }
-        
-        /* Instrucción para móviles */
-        .scroll-hint {
-            display: none;
-            text-align: center;
-            color: #95a5a6;
-            font-size: 12px;
-            margin-bottom: 10px;
-            font-style: italic;
+
+        :root {
+            --azul: #2563eb;
+            --azul-claro: #eaf2ff;
+            --azul-suave: #dbeafe;
+            --texto: #1e293b;
+            --texto-secundario: #64748b;
+            --fondo: #f5f8fc;
+            --blanco: #ffffff;
+            --borde: #e2e8f0;
+            --receso: #fff7d6;
+            --receso-borde: #f6c945;
+            --sombra: 0 10px 30px rgba(30, 64, 175, 0.08);
         }
 
+        body {
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+
+            font-family:
+                "Segoe UI",
+                Tahoma,
+                Geneva,
+                Verdana,
+                sans-serif;
+
+            background:
+                radial-gradient(
+                    circle at top left,
+                    #eaf2ff 0%,
+                    transparent 35%
+                ),
+                var(--fondo);
+
+            color: var(--texto);
+        }
+
+        /* =========================
+           CONTENEDOR PRINCIPAL
+        ========================== */
+
+        .container {
+            width: 100%;
+            max-width: 1150px;
+            margin: 0 auto;
+
+            background: var(--blanco);
+            border: 1px solid var(--borde);
+            border-radius: 24px;
+
+            padding: 28px;
+
+            box-shadow: var(--sombra);
+        }
+
+        /* =========================
+           ENCABEZADO
+        ========================== */
+
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .school-icon {
+            width: 58px;
+            height: 58px;
+
+            margin: 0 auto 12px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 18px;
+
+            background: var(--azul-claro);
+            color: var(--azul);
+
+            font-size: 29px;
+
+            box-shadow:
+                0 5px 15px rgba(37, 99, 235, 0.12);
+        }
+
+        h1 {
+            margin: 0;
+
+            color: var(--texto);
+
+            font-size: 28px;
+            font-weight: 750;
+
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            margin: 8px 0 0;
+
+            color: var(--texto-secundario);
+
+            font-size: 15px;
+        }
+
+        .turno {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+
+            margin-top: 14px;
+            padding: 7px 14px;
+
+            border-radius: 999px;
+
+            background: var(--azul-claro);
+            color: var(--azul);
+
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .turno::before {
+            content: "🌆";
+        }
+
+        /* =========================
+           INDICACIÓN MÓVIL
+        ========================== */
+
+        .scroll-hint {
+            display: none;
+
+            margin: 0 0 12px;
+
+            text-align: center;
+
+            color: var(--texto-secundario);
+
+            font-size: 12px;
+        }
+
+        /* =========================
+           TABLA
+        ========================== */
+
+        .table-wrapper {
+            width: 100%;
+
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+
+            border: 1px solid var(--borde);
+            border-radius: 18px;
+
+            background: var(--blanco);
+
+            box-shadow:
+                0 4px 15px rgba(15, 23, 42, 0.04);
+        }
+
+        table {
+            width: 100%;
+            min-width: 850px;
+
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+        /* =========================
+           ENCABEZADOS
+        ========================== */
+
+        thead th {
+            padding: 16px 12px;
+
+            background: #f8fafc;
+
+            color: #475569;
+
+            border-bottom: 1px solid var(--borde);
+
+            font-size: 13px;
+            font-weight: 750;
+
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+
+            position: sticky;
+            top: 0;
+
+            z-index: 5;
+        }
+
+        thead th:first-child {
+            background: var(--azul);
+            color: white;
+
+            border-top-left-radius: 17px;
+        }
+
+        thead th:last-child {
+            border-top-right-radius: 17px;
+        }
+
+        /* =========================
+           CELDAS
+        ========================== */
+
+        tbody td {
+            padding: 14px 10px;
+
+            text-align: center;
+
+            border-bottom: 1px solid #edf1f5;
+            border-right: 1px solid #edf1f5;
+
+            background: #ffffff;
+
+            font-size: 13px;
+            font-weight: 600;
+
+            transition:
+                background 0.2s ease,
+                transform 0.2s ease;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        tbody td:last-child {
+            border-right: none;
+        }
+
+        /* =========================
+           COLUMNA DE HORARIO
+        ========================== */
+
+        .time {
+            width: 125px;
+
+            background: #f8fafc !important;
+
+            color: #334155;
+
+            font-weight: 750 !important;
+
+            white-space: nowrap;
+        }
+
+        .time-label {
+            display: block;
+
+            color: #64748b;
+
+            font-size: 10px;
+            font-weight: 600;
+
+            margin-bottom: 3px;
+
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+        }
+
+        /* =========================
+           MATERIAS
+        ========================== */
+
+        .subject {
+            display: inline-block;
+
+            padding: 8px 10px;
+
+            border-radius: 10px;
+
+            background: #f8fafc;
+
+            color: #334155;
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        tbody tr:not(.receso):hover .subject {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 5px 12px rgba(15, 23, 42, 0.07);
+        }
+
+        /* Colores por materia */
+
+        .fc {
+            background: #eef2ff;
+            color: #4338ca;
+        }
+
+        .artes {
+            background: #fdf2f8;
+            color: #be185d;
+        }
+
+        .integracion {
+            background: #ecfdf5;
+            color: #047857;
+        }
+
+        .tecnologia {
+            background: #eff6ff;
+            color: #1d4ed8;
+        }
+
+        .matematicas {
+            background: #fff7ed;
+            color: #c2410c;
+        }
+
+        .ingles {
+            background: #f0fdfa;
+            color: #0f766e;
+        }
+
+        .espanol {
+            background: #fef2f2;
+            color: #b91c1c;
+        }
+
+        .fisica {
+            background: #f0f9ff;
+            color: #0369a1;
+        }
+
+        .historia {
+            background: #faf5ff;
+            color: #7e22ce;
+        }
+
+        .tutoria {
+            background: #f7fee7;
+            color: #4d7c0f;
+        }
+
+        .quimicas {
+            background: #ecfeff;
+            color: #0e7490;
+        }
+
+        /* =========================
+           RECESO
+        ========================== */
+
+        .receso td {
+            background: var(--receso);
+
+            border-bottom: 1px solid #f4df8c;
+
+            color: #8a6500;
+
+            font-weight: 750;
+
+            padding: 13px;
+        }
+
+        .receso .time {
+            background: #fff3bd !important;
+            color: #856404;
+        }
+
+        .receso-label {
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            gap: 9px;
+
+            font-size: 14px;
+
+            letter-spacing: 1px;
+        }
+
+        .receso-label::before {
+            content: "☕";
+            font-size: 17px;
+        }
+
+        /* =========================
+           PIE
+        ========================== */
+
+        .footer {
+            margin-top: 20px;
+
+            text-align: center;
+
+            color: #94a3b8;
+
+            font-size: 11px;
+            line-height: 1.6;
+        }
+
+        .footer strong {
+            color: #64748b;
+        }
+
+        /* =========================
+           BARRA DE DESPLAZAMIENTO
+        ========================== */
+
+        .table-wrapper::-webkit-scrollbar {
+            height: 7px;
+        }
+
+        .table-wrapper::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 10px;
+        }
+
+        .table-wrapper::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+
+        .table-wrapper::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* =========================
+           MÓVILES
+        ========================== */
+
         @media (max-width: 768px) {
-            .scroll-hint {
-                display: block; /* Muestra el hint de deslizar en móviles */
+
+            body {
+                padding: 10px;
             }
-            .container { padding: 15px 10px; }
-            h1 { font-size: 20px; }
+
+            .container {
+                padding: 18px 12px;
+
+                border-radius: 20px;
+            }
+
+            .school-icon {
+                width: 52px;
+                height: 52px;
+
+                border-radius: 16px;
+
+                font-size: 25px;
+            }
+
+            h1 {
+                font-size: 22px;
+            }
+
+            .subtitle {
+                font-size: 14px;
+            }
+
+            .turno {
+                font-size: 12px;
+            }
+
+            .scroll-hint {
+                display: block;
+            }
+
+            .table-wrapper {
+                border-radius: 15px;
+            }
+
+            table {
+                min-width: 820px;
+            }
+
+            thead th {
+                padding: 13px 10px;
+            }
+
+            tbody td {
+                padding: 12px 9px;
+            }
+
+            .subject {
+                padding: 7px 8px;
+                font-size: 12px;
+            }
+        }
+
+        /* =========================
+           PANTALLAS MUY PEQUEÑAS
+        ========================== */
+
+        @media (max-width: 420px) {
+
+            .container {
+                padding: 16px 9px;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+
+            .school-icon {
+                margin-bottom: 9px;
+            }
         }
     </style>
 </head>
+
 <body>
-    <div class="container">
-        <h1>Horario Escolar</h1>
-        <h3>Turno: Vespertino</h3>
-        
-        <div class="scroll-hint">↔️ Desliza hacia los lados para ver todo el horario ↔️</div>
-        
+
+    <main class="container">
+
+        <!-- ENCABEZADO -->
+        <header class="header">
+
+            <div class="school-icon">
+                🎒
+            </div>
+
+            <h1>Horario Escolar 3° A</h1>
+
+            <p class="subtitle">
+        Centro Educativo Integral 1
+            </p>
+
+            <div class="turno">
+                Turno Vespertino
+            </div>
+
+        </header>
+
+
+        <!-- INDICACIÓN PARA MÓVILES -->
+        <div class="scroll-hint">
+            ↔️ Desliza horizontalmente para consultar todo el horario
+        </div>
+
+
+        <!-- HORARIO -->
         <div class="table-wrapper">
+
             <table>
+
                 <thead>
                     <tr>
                         <th class="time">Hora</th>
@@ -138,70 +571,235 @@
                         <th>Viernes</th>
                     </tr>
                 </thead>
+
                 <tbody>
+
                     <tr>
-                        <td class="time">13:20 - 14:10</td>
-                        <td>F. C. y E.</td>
-                        <td>F. C. y E.</td>
-                        <td>Artes</td>
-                        <td>Artes</td>
-                        <td>Integración</td>
+                        <td class="time">
+                            <span class="time-label">Clase</span>
+                            13:20 - 14:10
+                        </td>
+
+                        <td>
+                            <span class="subject fc">F. C. y E.</span>
+                        </td>
+
+                        <td>
+                            <span class="subject fc">F. C. y E.</span>
+                        </td>
+
+                        <td>
+                            <span class="subject artes">Artes</span>
+                        </td>
+
+                        <td>
+                            <span class="subject artes">Artes</span>
+                        </td>
+
+                        <td>
+                            <span class="subject integracion">Integración</span>
+                        </td>
                     </tr>
+
+
                     <tr>
-                        <td class="time">14:10 - 15:00</td>
-                        <td>Tecnología</td>
-                        <td>Artes</td>
-                        <td>Inglés</td>
-                        <td>Inglés</td>
-                        <td>Inglés</td>
+                        <td class="time">
+                            <span class="time-label">Clase</span>
+                            14:10 - 15:00
+                        </td>
+
+                        <td>
+                            <span class="subject tecnologia">Tecnología</span>
+                        </td>
+
+                        <td>
+                            <span class="subject artes">Artes</span>
+                        </td>
+
+                        <td>
+                            <span class="subject ingles">Inglés</span>
+                        </td>
+
+                        <td>
+                            <span class="subject ingles">Inglés</span>
+                        </td>
+
+                        <td>
+                            <span class="subject ingles">Inglés</span>
+                        </td>
                     </tr>
+
+
                     <tr>
-                        <td class="time">15:00 - 15:50</td>
-                        <td>Matemáticas</td>
-                        <td>Matemáticas</td>
-                        <td>Tecnología</td>
-                        <td>Tecnología</td>
-                        <td>Español</td>
+                        <td class="time">
+                            <span class="time-label">Clase</span>
+                            15:00 - 15:50
+                        </td>
+
+                        <td>
+                            <span class="subject matematicas">Matemáticas</span>
+                        </td>
+
+                        <td>
+                            <span class="subject matematicas">Matemáticas</span>
+                        </td>
+
+                        <td>
+                            <span class="subject tecnologia">Tecnología</span>
+                        </td>
+
+                        <td>
+                            <span class="subject tecnologia">Tecnología</span>
+                        </td>
+
+                        <td>
+                            <span class="subject espanol">Español</span>
+                        </td>
                     </tr>
+
+
+                    <!-- RECESO -->
                     <tr class="receso">
-                        <td class="time">15:50 - 16:20</td>
-                        <td colspan="5">RECESO</td>
+
+                        <td class="time">
+                            <span class="time-label">Descanso</span>
+                            15:50 - 16:20
+                        </td>
+
+                        <td colspan="5">
+                            <div class="receso-label">
+                                RECESO
+                            </div>
+                        </td>
+
                     </tr>
+
+
                     <tr>
-                        <td class="time">16:20 - 17:10</td>
-                        <td>Edu. Física</td>
-                        <td>Edu. Física</td>
-                        <td>Historia</td>
-                        <td>Matemáticas</td>
-                        <td>Tutoría</td>
+                        <td class="time">
+                            <span class="time-label">Clase</span>
+                            16:20 - 17:10
+                        </td>
+
+                        <td>
+                            <span class="subject fisica">Edu. Física</span>
+                        </td>
+
+                        <td>
+                            <span class="subject fisica">Edu. Física</span>
+                        </td>
+
+                        <td>
+                            <span class="subject historia">Historia</span>
+                        </td>
+
+                        <td>
+                            <span class="subject matematicas">Matemáticas</span>
+                        </td>
+
+                        <td>
+                            <span class="subject tutoria">Tutoría</span>
+                        </td>
                     </tr>
+
+
                     <tr>
-                        <td class="time">17:10 - 18:00</td>
-                        <td>Español</td>
-                        <td>Historia</td>
-                        <td>Matemáticas</td>
-                        <td>Español</td>
-                        <td>Historia</td>
+                        <td class="time">
+                            <span class="time-label">Clase</span>
+                            17:10 - 18:00
+                        </td>
+
+                        <td>
+                            <span class="subject espanol">Español</span>
+                        </td>
+
+                        <td>
+                            <span class="subject historia">Historia</span>
+                        </td>
+
+                        <td>
+                            <span class="subject matematicas">Matemáticas</span>
+                        </td>
+
+                        <td>
+                            <span class="subject espanol">Español</span>
+                        </td>
+
+                        <td>
+                            <span class="subject historia">Historia</span>
+                        </td>
                     </tr>
+
+
                     <tr>
-                        <td class="time">18:00 - 18:50</td>
-                        <td>Español</td>
-                        <td>Español</td>
-                        <td>C. Químicas</td>
-                        <td>Historia</td>
-                        <td>Matemáticas</td>
+                        <td class="time">
+                            <span class="time-label">Clase</span>
+                            18:00 - 18:50
+                        </td>
+
+                        <td>
+                            <span class="subject quimicas">C. Químicas</span>
+                        </td>
+
+                        <td>
+                            <span class="subject espanol">Español</span>
+                        </td>
+
+                        <td>
+                            <span class="subject espanol">Español</span>
+                        </td>
+
+                        <td>
+                            <span class="subject historia">Historia</span>
+                        </td>
+
+                        <td>
+                            <span class="subject matematicas">Matemáticas</span>
+                        </td>
                     </tr>
+
+
                     <tr>
-                        <td class="time">18:50 - 19:40</td>
-                        <td>C. Químicas</td>
-                        <td>C. Químicas</td>
-                        <td>C. Químicas</td>
-                        <td>C. Químicas</td>
-                        <td>C. Químicas</td>
+                        <td class="time">
+                            <span class="time-label">Clase</span>
+                            18:50 - 19:40
+                        </td>
+
+                        <td>
+                            <span class="subject quimicas">C. Químicas</span>
+                        </td>
+
+                        <td>
+                            <span class="subject quimicas">C. Químicas</span>
+                        </td>
+
+                        <td>
+                            <span class="subject quimicas">C. Químicas</span>
+                        </td>
+
+                        <td>
+                            <span class="subject quimicas">C. Químicas</span>
+                        </td>
+
+                        <td>
+                            <span class="subject quimicas">C. Químicas</span>
+                        </td>
                     </tr>
+
                 </tbody>
+
             </table>
+
         </div>
-    </div>
+
+
+        <!-- PIE -->
+        <footer class="footer">
+            © Todos los derechos reservados - 2026<br>
+            <strong>Autor: Christopher Luis Celaya Ricardez | ChrisWorld™</strong>
+        </footer>
+
+    </main>
+
 </body>
 </html>
