@@ -1,534 +1,612 @@
-        * {
-            box-sizing: border-box;
-        }
-
-        :root {
-            --azul: #2563eb;
-            --azul-claro: #eaf2ff;
-            --azul-suave: #dbeafe;
-            --texto: #1e293b;
-            --texto-secundario: #64748b;
-            --fondo: #f5f8fc;
-            --blanco: #ffffff;
-            --borde: #e2e8f0;
-            --receso: #fff7d6;
-            --receso-borde: #f6c945;
-            --sombra: 0 10px 30px rgba(30, 64, 175, 0.08);
-        }
-
-        body {
-            margin: 0;
-            padding: 20px;
-            min-height: 100vh;
 
-            font-family:
-                "Segoe UI",
-                Tahoma,
-                Geneva,
-                Verdana,
-                sans-serif;
-
-            background:
-                radial-gradient(
-                    circle at top left,
-                    #eaf2ff 0%,
-                    transparent 35%
-                ),
-                var(--fondo);
+/* =========================
+   FUENTES PERSONALIZADAS
+========================== */
+
+@font-face {
+    font-family: "SpotifyTitleBold";
+    src: url("./Spotify titlebold.otf") format("opentype");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "SpotifyBold";
+    src: url("./Spotify bold.otf") format("opentype");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "SpotifyRegular";
+    src: url("./Spotify regular.otf") format("opentype");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Poster";
+    src: url("./Poster.otf") format("opentype");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* =========================
+   CONFIGURACIÓN GENERAL
+========================== */
+
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --azul: #2563eb;
+    --azul-claro: #eaf2ff;
+    --azul-suave: #dbeafe;
+    --texto: #1e293b;
+    --texto-secundario: #64748b;
+    --fondo: #f5f8fc;
+    --blanco: #ffffff;
+    --borde: #e2e8f0;
+    --receso: #fff7d6;
+    --receso-borde: #f6c945;
+    --sombra: 0 10px 30px rgba(30, 64, 175, 0.08);
+}
+
+body {
+    margin: 0;
+    padding: 20px;
+    min-height: 100vh;
+
+    font-family: "SpotifyRegular", sans-serif;
+
+    background:
+        radial-gradient(
+            circle at top left,
+            #eaf2ff 0%,
+            transparent 35%
+        ),
+        var(--fondo);
+
+    color: var(--texto);
+}
+
+/* =========================
+   CONTENEDOR PRINCIPAL
+========================== */
+
+.container {
+    width: 100%;
+    max-width: 1150px;
+    margin: 0 auto;
+
+    background: var(--blanco);
+    border: 1px solid var(--borde);
+    border-radius: 24px;
+
+    padding: 28px;
+
+    box-shadow: var(--sombra);
+}
+
+/* =========================
+   ENCABEZADO
+========================== */
 
-            color: var(--texto);
-        }
+.header {
+    text-align: center;
+    margin-bottom: 25px;
+}
 
-        /* =========================
-           CONTENEDOR PRINCIPAL
-        ========================== */
+.school-icon {
+    width: 58px;
+    height: 58px;
 
-        .container {
-            width: 100%;
-            max-width: 1150px;
-            margin: 0 auto;
+    margin: 0 auto 12px;
 
-            background: var(--blanco);
-            border: 1px solid var(--borde);
-            border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-            padding: 28px;
+    border-radius: 18px;
 
-            box-shadow: var(--sombra);
-        }
+    background: var(--azul-claro);
+    color: var(--azul);
 
-        /* =========================
-           ENCABEZADO
-        ========================== */
+    font-size: 29px;
 
-        .header {
-            text-align: center;
-            margin-bottom: 25px;
-        }
+    box-shadow: 0 5px 15px rgba(37, 99, 235, 0.12);
+}
 
-        .school-icon {
-            width: 58px;
-            height: 58px;
+h1 {
+    margin: 0;
 
-            margin: 0 auto 12px;
+    color: var(--texto);
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
+    font-family: "SpotifyTitleBold", sans-serif;
+    font-size: 28px;
+    font-weight: 700;
 
-            border-radius: 18px;
+    letter-spacing: -0.5px;
+}
 
-            background: var(--azul-claro);
-            color: var(--azul);
+h2 {
+    font-family: "SpotifyTitleBold", sans-serif;
+}
 
-            font-size: 29px;
+.subtitle {
+    margin: 8px 0 0;
 
-            box-shadow:
-                0 5px 15px rgba(37, 99, 235, 0.12);
-        }
+    color: var(--texto-secundario);
 
-        h1 {
-            margin: 0;
+    font-size: 15px;
+}
 
-            color: var(--texto);
+.turno {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
 
-            font-size: 28px;
-            font-weight: 750;
+    margin-top: 14px;
+    padding: 7px 14px;
 
-            letter-spacing: -0.5px;
-        }
+    border-radius: 999px;
 
-        .subtitle {
-            margin: 8px 0 0;
+    background: var(--azul-claro);
+    color: var(--azul);
 
-            color: var(--texto-secundario);
+    font-size: 13px;
+    font-weight: 700;
+}
 
-            font-size: 15px;
-        }
+.downloadh {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
 
-        .turno {
-            display: inline-flex;
-            align-items: center;
-            gap: 7px;
+    margin-top: 14px;
+    padding: 7px 14px;
 
-            margin-top: 14px;
-            padding: 7px 14px;
+    border-radius: 999px;
 
-            border-radius: 999px;
+    background: var(--azul-claro);
+    color: var(--azul);
 
-            background: var(--azul-claro);
-            color: var(--azul);
+    font-size: 13px;
+    font-weight: 700;
+}
 
-            font-size: 13px;
-            font-weight: 700;
-        }
+.turno::before {
+    content: "🌆";
+}
 
-        .downloadh {
-            display: inline-flex;
-            align-items: center;
-            gap: 7px;
+/* =========================
+   INDICACIÓN MÓVIL
+========================== */
 
-            margin-top: 14px;
-            padding: 7px 14px;
+.scroll-hint {
+    display: none;
 
-            border-radius: 999px;
+    margin: 0 0 12px;
 
-            background: var(--azul-claro);
-            color: var(--azul);
+    text-align: center;
 
-            font-size: 13px;
-            font-weight: 700;
-        }
+    color: var(--texto-secundario);
 
-        .turno::before {
-            content: "🌆";
-        }
+    font-size: 12px;
+}
 
-        /* =========================
-           INDICACIÓN MÓVIL
-        ========================== */
+/* =========================
+   TABLA
+========================== */
 
-        .scroll-hint {
-            display: none;
+.table-wrapper {
+    width: 100%;
 
-            margin: 0 0 12px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
 
-            text-align: center;
+    border: 1px solid var(--borde);
+    border-radius: 18px;
 
-            color: var(--texto-secundario);
+    background: var(--blanco);
 
-            font-size: 12px;
-        }
+    box-shadow: 0 4px 15px rgba(15, 23, 42, 0.04);
+}
 
-        /* =========================
-           TABLA
-        ========================== */
+table {
+    width: 100%;
+    min-width: 850px;
 
-        .table-wrapper {
-            width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
 
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
+/* =========================
+   ENCABEZADOS
+========================== */
 
-            border: 1px solid var(--borde);
-            border-radius: 18px;
+thead th {
+    padding: 16px 12px;
 
-            background: var(--blanco);
+    background: #f8fafc;
 
-            box-shadow:
-                0 4px 15px rgba(15, 23, 42, 0.04);
-        }
+    color: #475569;
 
-        table {
-            width: 100%;
-            min-width: 850px;
+    border-bottom: 1px solid var(--borde);
 
-            border-collapse: separate;
-            border-spacing: 0;
-        }
+    font-size: 13px;
+    font-weight: 750;
 
-        /* =========================
-           ENCABEZADOS
-        ========================== */
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 
-        thead th {
-            padding: 16px 12px;
+    position: sticky;
+    top: 0;
 
-            background: #f8fafc;
+    z-index: 5;
+}
 
-            color: #475569;
+thead th:first-child {
+    background: var(--azul);
+    color: white;
 
-            border-bottom: 1px solid var(--borde);
+    border-top-left-radius: 17px;
+}
 
-            font-size: 13px;
-            font-weight: 750;
+thead th:last-child {
+    border-top-right-radius: 17px;
+}
 
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+/* =========================
+   CELDAS
+========================== */
 
-            position: sticky;
-            top: 0;
+tbody td {
+    padding: 14px 10px;
 
-            z-index: 5;
-        }
+    text-align: center;
 
-        thead th:first-child {
-            background: var(--azul);
-            color: white;
+    border-bottom: 1px solid #edf1f5;
+    border-right: 1px solid #edf1f5;
 
-            border-top-left-radius: 17px;
-        }
+    background: #ffffff;
 
-        thead th:last-child {
-            border-top-right-radius: 17px;
-        }
+    font-size: 13px;
+    font-weight: 600;
 
-        /* =========================
-           CELDAS
-        ========================== */
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
 
-        tbody td {
-            padding: 14px 10px;
+tbody tr:last-child td {
+    border-bottom: none;
+}
 
-            text-align: center;
+tbody td:last-child {
+    border-right: none;
+}
 
-            border-bottom: 1px solid #edf1f5;
-            border-right: 1px solid #edf1f5;
+/* =========================
+   COLUMNA DE HORARIO
+========================== */
 
-            background: #ffffff;
+.time {
+    width: 125px;
 
-            font-size: 13px;
-            font-weight: 600;
+    background: #f8fafc !important;
 
-            transition:
-                background 0.2s ease,
-                transform 0.2s ease;
-        }
+    color: #334155;
 
-        tbody tr:last-child td {
-            border-bottom: none;
-        }
+    font-weight: 750 !important;
 
-        tbody td:last-child {
-            border-right: none;
-        }
+    white-space: nowrap;
+}
 
-        /* =========================
-           COLUMNA DE HORARIO
-        ========================== */
+.time-label {
+    display: block;
 
-        .time {
-            width: 125px;
+    color: #64748b;
 
-            background: #f8fafc !important;
+    font-size: 10px;
+    font-weight: 600;
 
-            color: #334155;
+    margin-bottom: 3px;
 
-            font-weight: 750 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+}
 
-            white-space: nowrap;
-        }
+/* =========================
+   MATERIAS
+========================== */
 
-        .time-label {
-            display: block;
+.subject {
+    display: inline-block;
 
-            color: #64748b;
+    padding: 8px 10px;
 
-            font-size: 10px;
-            font-weight: 600;
+    border-radius: 10px;
 
-            margin-bottom: 3px;
+    background: #f8fafc;
 
-            text-transform: uppercase;
-            letter-spacing: 0.6px;
-        }
+    color: #334155;
 
-        /* =========================
-           MATERIAS
-        ========================== */
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
 
-        .subject {
-            display: inline-block;
+tbody tr:not(.receso):hover .subject {
+    transform: translateY(-2px);
 
-            padding: 8px 10px;
+    box-shadow: 0 5px 12px rgba(15, 23, 42, 0.07);
+}
 
-            border-radius: 10px;
+/* Colores por materia */
 
-            background: #f8fafc;
+.fc {
+    background: #eef2ff;
+    color: #4338ca;
+}
 
-            color: #334155;
+.artes {
+    background: #fdf2f8;
+    color: #be185d;
+}
 
-            transition:
-                transform 0.2s ease,
-                box-shadow 0.2s ease;
-        }
+.integracion {
+    background: #ecfdf5;
+    color: #047857;
+}
 
-        tbody tr:not(.receso):hover .subject {
-            transform: translateY(-2px);
+.tecnologia {
+    background: #eff6ff;
+    color: #1d4ed8;
+}
 
-            box-shadow:
-                0 5px 12px rgba(15, 23, 42, 0.07);
-        }
+.matematicas {
+    background: #fff7ed;
+    color: #c2410c;
+}
 
-        /* Colores por materia */
+.ingles {
+    background: #f0fdfa;
+    color: #0f766e;
+}
 
-        .fc {
-            background: #eef2ff;
-            color: #4338ca;
-        }
+.espanol {
+    background: #fef2f2;
+    color: #b91c1c;
+}
 
-        .artes {
-            background: #fdf2f8;
-            color: #be185d;
-        }
+.fisica {
+    background: #f0f9ff;
+    color: #0369a1;
+}
 
-        .integracion {
-            background: #ecfdf5;
-            color: #047857;
-        }
+.historia {
+    background: #faf5ff;
+    color: #7e22ce;
+}
 
-        .tecnologia {
-            background: #eff6ff;
-            color: #1d4ed8;
-        }
+.tutoria {
+    background: #f7fee7;
+    color: #4d7c0f;
+}
 
-        .matematicas {
-            background: #fff7ed;
-            color: #c2410c;
-        }
+.quimicas {
+    background: #ecfeff;
+    color: #0e7490;
+}
 
-        .ingles {
-            background: #f0fdfa;
-            color: #0f766e;
-        }
+/* =========================
+   RECESO
+========================== */
 
-        .espanol {
-            background: #fef2f2;
-            color: #b91c1c;
-        }
+.receso td {
+    background: var(--receso);
 
-        .fisica {
-            background: #f0f9ff;
-            color: #0369a1;
-        }
+    border-bottom: 1px solid #f4df8c;
 
-        .historia {
-            background: #faf5ff;
-            color: #7e22ce;
-        }
+    color: #8a6500;
 
-        .tutoria {
-            background: #f7fee7;
-            color: #4d7c0f;
-        }
+    font-weight: 750;
 
-        .quimicas {
-            background: #ecfeff;
-            color: #0e7490;
-        }
+    padding: 13px;
+}
 
-        /* =========================
-           RECESO
-        ========================== */
+.receso .time {
+    background: #fff3bd !important;
+    color: #856404;
+}
 
-        .receso td {
-            background: var(--receso);
+.receso-label {
+    display: flex;
 
-            border-bottom: 1px solid #f4df8c;
+    align-items: center;
+    justify-content: center;
 
-            color: #8a6500;
+    gap: 9px;
 
-            font-weight: 750;
+    font-size: 14px;
 
-            padding: 13px;
-        }
+    letter-spacing: 1px;
+}
 
-        .receso .time {
-            background: #fff3bd !important;
-            color: #856404;
-        }
+.receso-label::before {
+    content: "☕";
+    font-size: 17px;
+}
 
-        .receso-label {
-            display: flex;
+/* =========================
+   PIE DE PÁGINA
+========================== */
 
-            align-items: center;
-            justify-content: center;
+.footer {
+    margin-top: 20px;
 
-            gap: 9px;
+    text-align: center;
 
-            font-size: 14px;
+    color: #cacaca;
 
-            letter-spacing: 1px;
-        }
+    font-family: "Poster", sans-serif;
+    font-size: 11px;
+    line-height: 1.6;
+}
 
-        .receso-label::before {
-            content: "☕";
-            font-size: 17px;
-        }
 
-        /* =========================
-           PIE
-        ========================== */
+.footer {
+    margin-top: 20px;
+    text-align: center;
+    color: #94a3b8;
+    font-family: "SpotifyBold", sans-serif;
+    font-size: 11px;
+    line-height: 1.6;
+}
 
-        .footer {
-            margin-top: 20px;
+.footer strong {
+    color: #64748b;
+    font-family: "Poster", sans-serif;
+    font-weight: 400;
+}
 
-            text-align: center;
+.footer-img {
+    display: block;
+    width: 100px;
+    max-width: 100%;
+    height: auto;
+    margin: 1px auto 0;
+    object-fit: contain;
+}
+.footer-divider {
+    border: 0;
+    height: 1px;
+    background-color: #616161;
+    width: 80%;
+    margin: 10px auto;
+}
 
-            color: #94a3b8;
 
-            font-size: 11px;
-            line-height: 1.6;
-        }
+/* =========================
+   TEXTO DESTACADO
+========================== */
 
-        .footer strong {
-            color: #64748b;
-        }
+strong,
+b {
+    font-family: "SpotifyBold", sans-serif;
+    font-weight: 700;
+}
 
-        /* =========================
-           BARRA DE DESPLAZAMIENTO
-        ========================== */
+/* =========================
+   BARRA DE DESPLAZAMIENTO
+========================== */
 
-        .table-wrapper::-webkit-scrollbar {
-            height: 7px;
-        }
+.table-wrapper::-webkit-scrollbar {
+    height: 7px;
+}
 
-        .table-wrapper::-webkit-scrollbar-track {
-            background: #f1f5f9;
-            border-radius: 10px;
-        }
+.table-wrapper::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 10px;
+}
 
-        .table-wrapper::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 10px;
-        }
+.table-wrapper::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
 
-        .table-wrapper::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8;
-        }
+.table-wrapper::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
 
-        /* =========================
-           MÓVILES
-        ========================== */
+/* =========================
+   MÓVILES
+========================== */
 
-        @media (max-width: 768px) {
+@media (max-width: 768px) {
 
-            body {
-                padding: 10px;
-            }
+    body {
+        padding: 10px;
+    }
 
-            .container {
-                padding: 18px 12px;
+    .container {
+        padding: 18px 12px;
 
-                border-radius: 20px;
-            }
+        border-radius: 20px;
+    }
 
-            .school-icon {
-                width: 52px;
-                height: 52px;
+    .school-icon {
+        width: 52px;
+        height: 52px;
 
-                border-radius: 16px;
+        border-radius: 16px;
 
-                font-size: 25px;
-            }
+        font-size: 25px;
+    }
 
-            h1 {
-                font-size: 22px;
-            }
+    h1 {
+        font-size: 22px;
+    }
 
-            .subtitle {
-                font-size: 14px;
-            }
+    .subtitle {
+        font-size: 14px;
+    }
 
-            .turno {
-                font-size: 12px;
-            }
-            
-            .downloadh {
-                font-size: 12px;
-            }
+    .turno {
+        font-size: 12px;
+    }
 
-            .scroll-hint {
-                display: block;
-            }
+    .downloadh {
+        font-size: 12px;
+    }
 
-            .table-wrapper {
-                border-radius: 15px;
-            }
+    .scroll-hint {
+        display: block;
+    }
 
-            table {
-                min-width: 820px;
-            }
+    .table-wrapper {
+        border-radius: 15px;
+    }
 
-            thead th {
-                padding: 13px 10px;
-            }
+    table {
+        min-width: 820px;
+    }
 
-            tbody td {
-                padding: 12px 9px;
-            }
+    thead th {
+        padding: 13px 10px;
+    }
 
-            .subject {
-                padding: 7px 8px;
-                font-size: 12px;
-            }
-        }
+    tbody td {
+        padding: 12px 9px;
+    }
 
-        /* =========================
-           PANTALLAS MUY PEQUEÑAS
-        ========================== */
+    .subject {
+        padding: 7px 8px;
+        font-size: 12px;
+    }
+}
 
-        @media (max-width: 420px) {
+/* =========================
+   PANTALLAS MUY PEQUEÑAS
+========================== */
 
-            .container {
-                padding: 16px 9px;
-            }
+@media (max-width: 420px) {
 
-            h1 {
-                font-size: 20px;
-            }
+    .container {
+        padding: 16px 9px;
+    }
 
-            .school-icon {
-                margin-bottom: 9px;
-            }
-        }
+    h1 {
+        font-size: 20px;
+    }
+
+    .school-icon {
+        margin-bottom: 9px;
+    }
+}
